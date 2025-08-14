@@ -62,15 +62,18 @@ refreshToken:{    // for this we install jsonwebtoken [npm i jsonwebtoken] which
 // for password encryption we'll use pre which is a hook
 userSchema.pre("save",async function(next) {
     if(!this.isModified("password")) return next();
-    this.password = bcrypt.hash(this.password,10)
+    this.password = await bcrypt.hash(this.password,10)
     next()
 })
 
+// we will use isPasswordCorrect in loginfunction in user.controller
 userSchema.methods.isPasswordCorrect = async function (password) {
    return await bcrypt.compare(password,this.password)
 }
 
-userSchema.methods.generateAccessToken = function(){
+
+//  token ke liye hum login function banenge controoller me
+userSchema.methods.generateAccessToken = function(){         //generateAccesToken=short lived
     return jwt.sign({
         _id: this.id,
         email: this.email,
@@ -83,7 +86,7 @@ userSchema.methods.generateAccessToken = function(){
     }
 )
 }
-userSchema.methods.generateRefreshToken = function (){
+userSchema.methods.generateRefreshToken = function (){      // generateRefreshToken= long lived
      return jwt.sign({
         _id: this.id,
         

@@ -1,8 +1,9 @@
 // we are craeting this as we don't want to write all those codes like async await,try,catch when connecting with database. in main folder.
 // asyncHandler bss ek method banaega aur usko import kr dega.
 
-
-
+//Async Error Wrapper
+// Instead of writing try...catch in every controller, you use this helper.
+//If the handler throws an error → passes it to Express error handling (next(err))
 const asyncHandler = (requestHandler) => {
    return  (req,res,next) => {
         Promise.resolve(requestHandler(req,res,next)).
