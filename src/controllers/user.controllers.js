@@ -194,6 +194,9 @@ const logoutUser = asyncHandler(async(req, res) => {
     .json(new ApiResponse(200, {}, "User logged Out"))
 })
 
+//Access token → Short-lived (used for quick authorization, expires quickly).
+//Refresh token → Long-lived (used to get a new access token without logging in again).
+
 const refreshAccessToken = asyncHandler(async (req, res) => {
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
 
@@ -241,6 +244,8 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     }
 
 })
+
+
 
 
 
